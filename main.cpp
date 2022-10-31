@@ -1,8 +1,10 @@
+
 // Libraries imported
 #include <iostream>
 #include <string>
 #include <ctime>
 #include <cstdlib>
+#include <cctype>
 
 using namespace std;
 
@@ -14,6 +16,7 @@ void StartFight(){
     cout << "\n" << "Starting fight..." << endl;
   }
 }
+
 
 void YouWon(){
   cout << "\n" << "Congratulations! You won!" << endl;
@@ -39,6 +42,7 @@ for(int i=0; i<30; i++){
   int Player = (rand() % 20) + 10;
   int Enemy = (rand() % 30) + 20;
   cout << "\n" << endl;
+  // Maybe add for how much damage did player / enemy hit? Critical strikes with 5% chance?
   if(Player <=20){
     PlayerHealth=PlayerHealth-EnemyAttack;
     cout << "-------------------" << "\n" << "Enemy's move!" << "\n" << "You've been hit" << "\n" << "-------------------" << endl;
@@ -54,39 +58,9 @@ for(int i=0; i<30; i++){
  }
 }
 
-void EnemyEncounterForest(){
-  cout << "It's been a long way but you've reached the forest now." << "\n" << "Oh no what is that?" << "\n" << "You've been ambushed by a Forest Goblin!!!" << "\n" << endl;
-  cout << "There are only two options now." << "\n" << "Fight or escape." << "\n" << "To engage battle:" << "\n" << "Click F to fight or N to run if you are too scared" << "\n" << endl;
-  char fight3;
-  cin >> fight3;
-  if(fight3 == 'f'){
-    cout << "You chose to fight. Good." << "\n" << endl;
-    Combat();
-  }
-  else if(fight3 == 'n'){
-    cout << "You chose to run...Wow" << "\n" << endl;
-    GameOver();
-  }
-}
 
-void EnemyEncounterCaves(){
-    cout << "It's been a long way but you've reached the caves now." << "\n" << "Oh no what is that?" << "\n" << "You've been ambushed by a Troll!!!" << "\n" << endl;
-  cout << "There are only two options now." << "\n" << "Fight or escape." << "\n" << "To engage battle:" << "\n" << "Click F to fight or N to run if you are too scared" << "\n" << endl;
-  char fight2;
-  cin >> fight2;
-  if(fight2 == 'f'){
-    cout << "You chose to fight. Good." << "\n" << endl;
-    Combat();
-  }
-  else if(fight2 == 'n'){
-    cout << "You chose to run...Wow" << "\n" << endl;
-    GameOver();
-  }
-}
-
-void EnemyEncounterMountains(){
-  cout << "It's been a long way but you've reached the mountains now." << "\n" << "Oh no what is that?" << "\n" << "You've been ambushed by a Mountain Gnome!!!" << "\n" << endl;
-  cout << "There are only two options now." << "\n" << "Fight or escape." << "\n" << "To engage battle:" << "\n" << "Click F to fight or N to run if you are too scared" << "\n" << endl;
+// Friendly reminder DRY - do not repeat yourself -> try to extract the same code in one place
+void FightOrRun(){
   char fight;
   cin >> fight;
   if(fight == 'f'){
@@ -99,11 +73,33 @@ void EnemyEncounterMountains(){
   }
 }
 
+void EnemyEncounterForest(){
+  cout << "It's been a long way but you've reached the forest now." << "\n" << "Oh no what is that?" << "\n" << "You've been ambushed by a Forest Goblin!!!" << "\n" << endl;
+  cout << "There are only two options now." << "\n" << "Fight or escape." << "\n" << "To engage battle:" << "\n" << "Click F to fight or N to run if you are too scared" << "\n" << endl;
+    FightOrRun();
+  
+}
+
+void EnemyEncounterCaves(){
+    cout << "It's been a long way but you've reached the caves now." << "\n" << "Oh no what is that?" << "\n" << "You've been ambushed by a Troll!!!" << "\n" << endl;
+  cout << "There are only two options now." << "\n" << "Fight or escape." << "\n" << "To engage battle:" << "\n" << "Click F to fight or N to run if you are too scared" << "\n" << endl;
+    FightOrRun();
+}
+
+void EnemyEncounterMountains(){
+  cout << "It's been a long way but you've reached the mountains now." << "\n" << "Oh no what is that?" << "\n" << "You've been ambushed by a Mountain Gnome!!!" << "\n" << endl;
+  cout << "There are only two options now." << "\n" << "Fight or escape." << "\n" << "To engage battle:" << "\n" << "Click F to fight or N to run if you are too scared" << "\n" << endl;
+  FightOrRun();
+}
+
+
+
 void ChooseLocation(){
   cout << "\n" << "You can go to: " << "\n" << "M: The Moutains" << "\n" << "C: The Caves" << "\n" << "F: The Forest" << "\n" << "Where do you wish to go?" << endl;
   char al;
   cin >> al;
-  switch(al){
+  // For both capital / noncapital letters
+  switch(tolower(al)){
     case 'm' :
     cout << "\n" << "You chose The Mountains" << "\n" << endl;
     EnemyEncounterMountains();
